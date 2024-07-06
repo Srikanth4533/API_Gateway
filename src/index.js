@@ -18,6 +18,14 @@ app.use(
     }),
   );
 
+app.use(
+    '/flightservice',
+    createProxyMiddleware({
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+    }),
+);
+
 app.get("/home", (req, res) => {
     return res.status(200).json({
         message: "Home Route"

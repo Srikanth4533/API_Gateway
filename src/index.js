@@ -1,14 +1,21 @@
 const express = require("express")
 const morgan = require("morgan")
 const { createProxyMiddleware } = require("http-proxy-middleware")
-
+const rateLimit = require("express-rate-limit")
 
 
 const  { PORT } = require("./config/serverConfig")
 
+const limiter = rateLimit({
+	windowMs: 2 * 60 * 1000, 
+    max: 5
+})
+
 const app = express()
 
 app.use(morgan('combined'))
+
+app.use(limiter)
 
 app.use(
     '/bookingservice',
